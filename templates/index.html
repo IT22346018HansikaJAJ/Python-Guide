@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Installation Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #254e72;
+            --secondary: #D3D3D3; /* Grayish-white for icons */
+            --accent: #6dd5ed;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #254e72 0%,rgb(123, 142, 156) 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 2rem;
+        }
+
+        .os-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 4rem auto;
+        }
+
+        .os-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .os-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .os-icon {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            padding: 1.2rem 2.5rem;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            background: var(--secondary);
+            color: #254e72;
+            box-shadow: 0 8px 20px rgba(211, 211, 211, 0.4);
+        }
+
+        .official-link {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .official-link a {
+            background: #FFD700; /* Yellow specifically for this button */
+            color: #254e72;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .official-link a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5); /* Yellow shadow */
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; color: var(--secondary); margin-bottom: 3rem; font-size: 2.8rem;">
+        Select Your Operating System
+    </h1>
+    
+    <div class="os-selector">
+        <div class="os-card">
+            <div class="os-icon"><i class="fab fa-windows"></i></div> 
+            <h2 style="color: white; font-size: 2rem; margin-bottom: 1.5rem;">Windows</h2>
+            <button class="btn" onclick="window.location.href='/guide/windows'">
+                Start Installation Guide
+            </button>
+        </div>
+
+        <div class="os-card">
+            <div class="os-icon"><i class="fab fa-apple"></i></div>
+            <h2 style="color: white; font-size: 2rem; margin-bottom: 1.5rem;">macOS</h2>
+            <button class="btn" onclick="window.location.href='/guide/macos'">
+                Start Installation Guide
+            </button>
+        </div>
+
+        <div class="os-card">
+            <div class="os-icon"><i class="fab fa-linux"></i></div>
+            <h2 style="color: white; font-size: 2rem; margin-bottom: 1.5rem;">Linux</h2>
+            <button class="btn" onclick="window.location.href='/guide/linux'">
+                Start Installation Guide
+            </button>
+        </div>
+    </div>
+
+    <div class="official-link">
+        <a href="https://www.python.org/" target="_blank">
+            Visit Official Python Website
+        </a>
+    </div>
+</body>
+</html>

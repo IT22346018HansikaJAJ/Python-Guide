@@ -1,0 +1,201 @@
+<!-- templates/guide.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ os_name }} Guide</title>
+    <style>
+        :root {
+            --primary: #254e72;
+            --secondary: #FFD700;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #254e72 0%,rgb(62, 160, 230) 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 2rem;
+            color: white;
+        }
+
+        .guide-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            color: var(--secondary);
+            text-align: center;
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .step-progress {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .step-circle {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            color: white;
+            border: 2px solid var(--secondary);
+        }
+
+        .step-circle.active {
+            background: var(--secondary);
+            color: #254e72;
+            transform: scale(1.2);
+            font-size: 2.2rem;
+            border-color: transparent;
+        }
+
+        .step-content {
+            margin: 3rem 0;
+            padding: 2rem;
+            border-radius: 15px;
+        }
+
+        #stepTitle {
+            font-size: 2.2rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        #stepDesc {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            margin-bottom: 3rem;
+        }
+
+        .problem-accordion {
+            margin-top: 2rem;
+        }
+
+        .accordion-item {
+            background: rgba(0, 0, 0, 0.2);
+            margin-bottom: 1.5rem;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-item:hover {
+            transform: translateX(10px);
+        }
+
+        .accordion-header {
+            padding: 1.5rem;
+            background: rgba(255, 215, 0, 0.1);
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--secondary);
+        }
+
+        .accordion-content {
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.1);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            display: none;
+        }
+
+        .accordion-item.active .accordion-content {
+            display: block;
+        }
+
+        #nextButton {
+            margin-top: 3rem;
+            padding: 1.3rem 3rem;
+            font-size: 1.3rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="guide-container">
+        <h1>{{ os_name }} Python Installation Guide</h1>
+        
+        <div class="step-progress" id="progressBar">
+            {% for step in steps %}
+            <div class="step-circle">{{ loop.index }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="step-content" id="currentStep">
+            <h2 id="stepTitle"></h2>
+            <p id="stepDesc"></p>
+            
+            <div class="problem-accordion" id="problemsSection"></div>
+            
+            <button class="btn" onclick="nextStep()" id="nextButton">
+                Mark as Done ➔
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 0;
+        const steps = {{ steps|tojson }};
+
+        function updateProgress() {
+            document.querySelectorAll('.step-circle').forEach((circle, index) => {
+                circle.classList.toggle('active', index === currentStep);
+            });
+        }
+
+        function showProblems(problems) {
+            const container = document.getElementById('problemsSection');
+            container.innerHTML = problems.map(prob => `
+                <div class="accordion-item" onclick="this.classList.toggle('active')">
+                    <div class="accordion-header">
+                        ⚠️ ${prob.issue}
+                    </div>
+                    <div class="accordion-content">
+                        ✅ ${prob.solution}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function loadStep() {
+            document.getElementById('stepTitle').textContent = steps[currentStep].title;
+            document.getElementById('stepDesc').textContent = steps[currentStep].desc;
+            showProblems(steps[currentStep].problems || []);
+            updateProgress();
+        }
+
+        function nextStep() {
+            if(currentStep < steps.length - 1) {
+                currentStep++;
+                loadStep();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                window.location.href = '/complete';
+            }
+        }
+
+        // Initialize first step
+        loadStep();
+    </script>
+</body>
+</html>
